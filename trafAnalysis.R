@@ -97,8 +97,10 @@ trafDataNjMonth <- trafDataNJbase %>% group_by(Month)%>%
 
 trafDataNJ$Month <- as.factor(trafDataNJ$Month)
 
-
-plotmeans(trafDataNJ$frequency~trafDataNJ$Month)
+jpeg("rplot.jpg", width = 1920, height = 1080)
+plotmeans(trafDataNJ$frequency~trafDataNJ$Month,ylab="Frequency",xlab="Month",
+          main="Accidents over Time")
+dev.off()
 
 ggplot(data=trafDataNJ,aes(y=frequency, x = Month,color=Month))+
   geom_point()+
@@ -112,6 +114,7 @@ fitMonth <- r.squaredGLMM(freqVSmonth)
 #check_overdispersion(freqVSmonth)
 Anova(freqVSmonth,type=2)
 summary(freqVSmonth)
+emmeans(freqVSmonth,pairwise~Month,type = "response")
 fitMonth
 
 plotmeans(trafDataNJ$frequency~trafDataNJ$Month)
@@ -137,5 +140,5 @@ ggplot(data=trafDataNjDate,aes(y=frequency, x = Date))+
               color="red")+
   scale_color_viridis(discrete=T,option="turbo",begin=.25,end=.75)+
   scale_x_date(date_breaks = "1 month",date_labels = "%b %y")+
-  ggtitle("Accident Frequency in NJ Over 2021", "p = < 0.005, R²= 0.38, Family = Overdispersed Poisson")
+  ggtitle("Accident Frequency in NJ Over 2021", "p = < 0.005, Pseudo R²= 0.38, Distribtion = Overdispersed Poisson")
 
