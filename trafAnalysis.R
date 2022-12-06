@@ -14,7 +14,7 @@ library(ordinal)
 library(gplots)
 library(effectsize)
 library(viridis)
-#options(scipen = 10)
+#options(scipen = 100)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ######Run the Following ONCE########
